@@ -1,7 +1,7 @@
 @import-normalize;
 
 :root {
-  --main-text-color: #ffffff;
+  --main-text-color: #000000;
   --second-text-color: #2b2a2a;
   --accent-text-color: #8c00af;
   --main-bg-color: #4b0101;
