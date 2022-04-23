@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import styled from 'styled-components';
-import { getContacts } from '../../redux/selectors';
+import { getContacts } from 'redux/contacts-slice';
 import { useSelector, useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
-import { addItem } from '../../redux/itemsSlice';
+import { addContact } from 'redux/contacts-slice';
 
 const FormHtml = styled.form`
   border: 2px solid #000000;
@@ -91,7 +91,7 @@ const ContactForm = () => {
       toast.error(`Contact with ${data.number} number is already in contacts.`);
       return;
     }
-    dispatch(addItem(data));
+    dispatch(addContact(data));
     return;
   };
 

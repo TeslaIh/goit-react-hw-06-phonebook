@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeItem } from '../../redux/itemsSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { deleteContact, getFilter, getContacts } from 'redux/contacts-slice';
 import Notification from '../Notification';
-import { getContacts, getFilter, getVisibleContacts } from '../../redux/selectors';
 
 const StyledUl = styled.ul`
   padding-inline-start: 0;
@@ -55,39 +54,30 @@ const Button = styled.button`
   }
 `;
 
-const List = () => {
-  const dispatch = useDispatch();
-  const contacts = useSelector(getContacts);
+function ContactList() {
   const filter = useSelector(getFilter);
-  const currentContacts = useSelector(getVisibleContacts)
+  const contacts = useSelector(getContacts);
 
-  const getCurrentContacts = () => {
-    if (contacts.length !== 0) {
-      return currentContacts;
-    }
-  }
+  const dispatch = useDispatch();
 
-  const getFilteredContacts = () => {
-    if (contacts.length === 0) {
-      return contacts ;
-    }
+  const deleteSelectedContact = contactId => dispatch(deleteContact(contactId));
+
+  const filteredContacts = () => {
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
+      contact.name.toLowerCase().includes(normalizedFilter),
     );
   };
 
-  const filteredContacts = getFilteredContacts();
-  const curContacts = getCurrentContacts();
+  const filteredContactList = filteredContacts();
 
   return (
     <StyledUl>
-      {curContacts &&
-        filteredContacts.map(({ name, id, number }) => {
+      {filteredContactList.map(({ id, name, number }) => {
           return (
             <Li key={id}>
               {name}: {number}
-              <Button onClick={() => dispatch(removeItem(id))}>Delete</Button>
+              <Button onClick={() => deleteSelectedContact(id)}>Delete</Button>
             </Li>
           );
         })}
@@ -96,4 +86,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default ContactList;

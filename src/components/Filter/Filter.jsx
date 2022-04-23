@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeFilter, clearFilter } from '../../redux/filterSlice';
-import { getFilter } from '../../redux/selectors';
+import { changeFilter } from 'redux/contacts-slice';
+import { getFilter } from 'redux/contacts-slice';
 
 const Label = styled.label`
   display: flex;
@@ -33,9 +33,9 @@ const Filter = () => {
     dispatch(changeFilter(e.currentTarget.value));
   };
 
-  const filterReset = () => {
-    dispatch(clearFilter());
-  };
+  // const filterReset = () => {
+  //   dispatch(clearFilter());
+  // };
 
   return (
     <Label>
@@ -44,7 +44,7 @@ const Filter = () => {
         type="text"
         value={filter}
         onChange={onInputHandler}
-        onBlur={filterReset}
+        // onBlur={filterReset}
       />
       </Label>
   );
