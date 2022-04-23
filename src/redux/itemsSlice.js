@@ -11,6 +11,9 @@ const itemsSlice = createSlice({
     ],
   },
   reducers: {
+    visibleContacts(state) {
+      return state.initialState;
+    },
     addItem(state, action) {
       state.push(action.payload);
     },
@@ -20,7 +23,7 @@ const itemsSlice = createSlice({
   },
 });
 
-export const { addItem, removeItem } = itemsSlice.actions;
+export const { addItem, removeItem, visibleContacts } = itemsSlice.actions;
 
 export const itemsReducer = itemsSlice.reducer;
 

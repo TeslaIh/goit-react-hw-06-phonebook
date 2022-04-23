@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItem } from '../../redux/itemsSlice';
 import Notification from '../Notification';
-import { getContacts, getFilter } from '../../redux/selectors';
+import { getContacts, getFilter, getVisibleContacts } from '../../redux/selectors';
 
 const StyledUl = styled.ul`
   padding-inline-start: 0;
@@ -59,6 +59,13 @@ const List = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
+  const currentContacts = useSelector(getVisibleContacts)
+
+  const getCurrentContacts = () => {
+    if (contacts.length !== 0) {
+      return currentContacts;
+    }
+  }
 
   const getFilteredContacts = () => {
     if (contacts.length === 0) {
@@ -71,10 +78,11 @@ const List = () => {
   };
 
   const filteredContacts = getFilteredContacts();
+  const curContacts = getCurrentContacts();
 
   return (
     <StyledUl>
-      {contacts &&
+      {curContacts &&
         filteredContacts.map(({ name, id, number }) => {
           return (
             <Li key={id}>
